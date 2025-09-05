@@ -1,0 +1,29 @@
+server:
+  port: 1919
+  
+spring:
+  application: 
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: CAR-SERVICE
+              uri: lb://CARSERVICE
+              predicates:
+                - Path=/api/cars/**
+            - id: RESERVATION-SERVICE
+              uri: lb://RESERVATION
+              predicates:
+                - Path=/api/reservations/**    
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:9003/eureka/
+  instance:
+    hostname: localhost
+    
