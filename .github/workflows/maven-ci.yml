@@ -1,4 +1,4 @@
-name: Maven CI
+name: Gradle CI
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,17 +19,15 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-          cache: maven
 
-      - name: Build & Test (Car, Reservation, Gateway, Eureka)
-        run: |
-          mvn -f service_registry/pom.xml clean install
-          mvn -f carservice/pom.xml clean install
-          mvn -f reservationservice/pom.xml clean install
-          mvn -f cloud_gateway/pom.xml clean install
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x ./gradlew
+
+      - name: Build all services
+        run: ./gradlew build --no-daemon
 
       - name: Upload JARs
         uses: actions/upload-artifact@v4
         with:
           name: microservices-jars
-          path: "**/target/*.jar"
+          path: "**/build/libs/*.jar"
