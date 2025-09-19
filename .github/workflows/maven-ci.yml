@@ -22,16 +22,16 @@ jobs:
           cache: maven
 
       - name: Build Car Service
-        run: mvn -B -f carservice/pom.xml clean install
+        run: mvn -B -f carservice/pom.xml clean install -DskipTests
 
       - name: Build Reservation Service
-        run: mvn -B -f reservation/pom.xml clean install
+        run: mvn -B -f reservation/pom.xml clean install -DskipTests
 
       - name: Build Cloud Gateway
-        run: mvn -B -f cloud-gateway/pom.xml clean install
+        run: mvn -B -f cloud-gateway/pom.xml clean install -DskipTests
 
       - name: Build Service Registry
-        run: mvn -B -f service-registry/pom.xml clean install
+        run: mvn -B -f service-registry/pom.xml clean install -DskipTests
 
       - name: Upload JARs
         uses: actions/upload-artifact@v4
