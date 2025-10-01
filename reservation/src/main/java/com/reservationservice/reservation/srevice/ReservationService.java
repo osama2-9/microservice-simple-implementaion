@@ -5,10 +5,13 @@
 package com.reservationservice.reservation.srevice;
 
 import com.reservationservice.reservation.Repo.ReservationRepo;
+import com.reservationservice.reservation.VO.Car;
+import com.reservationservice.reservation.VO.ResponseTemplateVO;
 import com.reservationservice.reservation.models.Reservation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class ReservationService {
     @Autowired
     private ReservationRepo reservationRepo;
+    @Autowired
+    private RestTemplate restTemplate;
     
     
     public List<Reservation> getAllReservation(){
@@ -31,5 +36,21 @@ public class ReservationService {
    public Reservation createReservation(Reservation reservation){
    return this.reservationRepo.save(reservation);
    }
+   public ResponseTemplateVO getReservationWithCarByCarId(Long reservationId){
+   Reservation reservation = this.getById(reservationId);
+   Car car = this.restTemplate.getForObject("http://CARSERVICE/api/cars/"+reservation.getCarId(), Car.class);
+   
+   ResponseTemplateVO rvo = new ResponseTemplateVO();
+   rvo.setCar(car);
+   rvo.setReservation(reservation);
+   
+   return rvo;
+   
+   
+   
+   
+   
+   }
+           
     
 }

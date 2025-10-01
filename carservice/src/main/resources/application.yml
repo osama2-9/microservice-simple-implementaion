@@ -6,7 +6,7 @@ spring:
     name: car
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/cardb?serverTimezone=UTC
+    url: jdbc:postgresql://localhost:5432/carDB
     username: postgres
     password: osama
     driver-class-name: org.postgresql.Driver
@@ -23,3 +23,12 @@ spring:
   sql:
     init:
       mode: always
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost

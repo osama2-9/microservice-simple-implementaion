@@ -4,6 +4,7 @@
  */
 package com.reservationservice.reservation.controller;
 
+import com.reservationservice.reservation.VO.ResponseTemplateVO;
 import com.reservationservice.reservation.models.Reservation;
 import com.reservationservice.reservation.srevice.ReservationService;
 import java.util.List;
@@ -36,11 +37,11 @@ public class ReservationController {
     
     }
     
-    @GetMapping("/{id}")
-    public ResponseEntity getReservationById(@PathVariable long id){
-        Reservation reservation =  this.reservationService.getById(id);
-        return new ResponseEntity(reservation ,HttpStatus.OK);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity getReservationById(@PathVariable long id){
+//        Reservation reservation =  this.reservationService.getById(id);
+//        return new ResponseEntity(reservation ,HttpStatus.OK);
+//    }
     
     @PostMapping("/add")
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation){
@@ -50,4 +51,14 @@ public class ReservationController {
     
     
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseTemplateVO> getReservationWithCarByReservationId(@PathVariable Long id){
+    ResponseTemplateVO vo = this.reservationService.getReservationWithCarByCarId(id);
+    
+    return new ResponseEntity<>(vo, HttpStatus.OK);
+    
+    }
+    
+    
 }
